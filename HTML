@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cristiano Ronaldo</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="profile-img" id="profileImage"></div>
+            </div>
+            
+            <div class="card-body">
+                <h1 class="name">Cristiano Ronaldo</h1>
+                <p class="title">Futbolista profesional • Capitán de Portugal</p>
+                <p class="description">Considerado uno de los mejores futbolistas de todos los tiempos. Conocido por su ética de trabajo, liderazgo y capacidad goleadora excepcional.</p>
+                
+                <div class="skills-section">
+                    <h3 class="skills-title">Habilidades destacadas</h3>
+                    <ul class="skills-list">
+                        <li class="skill-item">
+                            Regate
+                            <span class="skill-highlight">Capacidad para superar defensores</span>
+                        </li>
+                        <li class="skill-item">
+                            Remate
+                            <span class="skill-highlight">Potencia y precisión excepcionales</span>
+                        </li>
+                        <li class="skill-item">
+                            Velocidad
+                            <span class="skill-highlight">Aceleración explosiva</span>
+                        </li>
+                        <li class="skill-item">
+                            Cabeceo
+                            <span class="skill-highlight">Salto y timing perfecto</span>
+                        </li>
+                        <li class="skill-item">
+                            Liderazgo
+                            <span class="skill-highlight">Motivador nato</span>
+                        </li>
+                    </ul>
+                </div>
+                
+
+                
+                <div class="buttons">
+                    <button class="btn btn-primary" id="toggleInfo">Ver logros</button>
+                    <button class="btn btn-secondary" id="themeToggle">Modo oscuro</button>
+                    <div class="counter" id="clickCounter">Botón presionado 0 veces</div>
+                </div>
+                
+                <div class="additional-info" id="additionalInfo">
+                    <div class="additional-info-content">
+                        <h3 class="info-title">Logros destacados</h3>
+                        <ul class="achievements-list">
+                            <li>5 veces ganador del Balón de Oro</li>
+                            <li>Máximo goleador histórico de la UEFA Champions League</li>
+                            <li>Máximo goleador de selecciones nacionales en la historia</li>
+                            <li>5 veces ganador de la UEFA Champions League</li>
+                            <li>7 veces máximo goleador de ligas europeas</li>
+                            <li>Ganador de la Eurocopa 2016 con Portugal</li>
+                            <li>Ganador de la Liga de Naciones 2019 con Portugal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos del DOM
+        const toggleInfoBtn = document.getElementById('toggleInfo');
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const additionalInfo = document.getElementById('additionalInfo');
+        const clickCounter = document.getElementById('clickCounter');
+        const profileImage = document.getElementById('profileImage');
+        const body = document.body;
+        
+        // Variables de estado
+        let clickCount = 0;
+        
+        // Funcionalidad para mostrar/ocultar información adicional
+        toggleInfoBtn.addEventListener('click', function() {
+            if (additionalInfo.style.maxHeight) {
+                additionalInfo.style.maxHeight = null;
+                toggleInfoBtn.textContent = 'Ver logros';
+            } else {
+                additionalInfo.style.maxHeight = additionalInfo.scrollHeight + 'px';
+                toggleInfoBtn.textContent = 'Ocultar logros';
+            }
+            
+            // Contador de clics
+            clickCount++;
+            clickCounter.textContent = `Botón presionado ${clickCount} ${clickCount === 1 ? 'vez' : 'veces'}`;
+        });
+        
+        // Funcionalidad para cambiar entre modo claro/oscuro
+        themeToggleBtn.addEventListener('click', function() {
+            body.classList.toggle('dark-theme');
+            themeToggleBtn.textContent = body.classList.contains('dark-theme') ? 'Modo claro' : 'Modo oscuro';
+        });
+        
+        // Animación de la imagen de perfil
+        profileImage.addEventListener('click', function() {
+            this.classList.toggle('rotated');
+            
+            // Crear efecto de confeti
+            createConfetti();
+        });
+        
+        // Funcionalidad para destacar habilidades al pasar el ratón
+        const skillItems = document.querySelectorAll('.skill-item');
+        skillItems.forEach(item => {
+            item.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+            });
+            
+            item.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = 'none';
+            });
+        });
+        
+        // Función para crear efecto de confeti
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const container = document.querySelector('.card-header');
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = '8px';
+                confetti.style.height = '8px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `${Math.random() * 100}%`;
+                confetti.style.opacity = '0.8';
+                confetti.style.zIndex = '10';
+                
+                container.appendChild(confetti);
+                
+                // Animación
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+                    { transform: `translateY(${Math.random() * 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0,0,0.2,1)'
+                });
+                
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+    </script>
+</body>
+</html>
